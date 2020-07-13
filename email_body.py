@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def get_contacts(file):
+def get_contacts(file): # Função para pegar todos os e-mails da lista
     full_list = []
     book = open_workbook(file, on_demand=True)
     for name in book.sheet_names():
@@ -20,14 +20,14 @@ def get_contacts(file):
 
 
 sender_email = input('email: ')
-receiver_email = get_contacts('C:\\Users\\guilh\\PycharmProjects\\email_project\\email_sender\\emails.xlsx')
+receiver_email = get_contacts(file) # Caminho do arquivo com a lista de e-mails
 password = pyssword()
 
 message = MIMEMultipart("alternative")
 message["Subject"] = "test"
 message["From"] = sender_email
 
-
+# Formatação html para o e-mail
 html = """\
 <html>
   <body>
@@ -39,7 +39,7 @@ html = """\
 part2 = MIMEText(html, "html")
 message.attach(part2)
 
-filename = 'C:\\Users\\guilh\\PycharmProjects\\email_project\\email_sender\\mapa.jpg'
+filename = '' # Caminho do arquivo caso queira anexar
 
 with open(filename, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
